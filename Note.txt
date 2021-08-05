@@ -1,0 +1,37 @@
+CLient
+npm i react-redux redux formik query-string react-select yup
+npm i react-bootstrap bootstrap axios react-router-dom
+npm install @reduxjs/toolkit
+npm install --save bootstrap
+npm install --save reactstrap
+npm install react-material-ui-carousel
+npm install react-multi-carousel --save
+yarn add react-countdown
+npm i clsx: className={clsx(classes.smallText, classes.greyTextColor)}
+npm install --save @stripe/react-stripe-js @stripe/stripe-js
+npm install socket.io-client react-scroll-to-bottom react-emoji
+
+MaterialUI:
+- Box
+- Dialog
+- CreateMui
+- Menu
+- Typography
+- TextField
+- PowerSettingsNewIcon
+- Card
+
+Xử lý mảng: 
+mảng 1: arr1 = [1, 2];
+mảng 2: arr2 = [ [3, 4] ];
+==> mục tiêu cuối: result = [1, 2, 3, 4]
+Ta sử dụng arr1.concat(...arr2)
+
+server:
+npm i express jsonwebtoken mongoose dotenv argon2 cors
+npm i mongoose-findorcreate
+npm install --save stripe
+npm i aws-sdk multer
+
+
+
