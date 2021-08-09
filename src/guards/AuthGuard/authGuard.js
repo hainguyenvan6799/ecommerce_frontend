@@ -8,11 +8,15 @@ const AuthGuard = ({ children }) => {
   const auth = useSelector((state) => state.auth);
   const { loading, isAuthenticated } = auth;
 
-  console.log("Hello");
+  // if (!isAuthenticated) return <Redirect to={PATH_NAME.LOGIN} />;
 
-  if (!isAuthenticated) return <Redirect to={PATH_NAME.LOGIN} />;
-
-  return loading ? "...Loading..." : <>{children}</>;
+  return loading ? (
+    "...Loading..."
+  ) : !isAuthenticated ? (
+    <Redirect to={PATH_NAME.LOGIN} />
+  ) : (
+    <>{children}</>
+  );
 };
 
 export default AuthGuard;

@@ -1,16 +1,20 @@
 import { Badge, Box, Button, makeStyles, Typography } from "@material-ui/core";
 import { ShoppingCart } from "@material-ui/icons";
+import ChatIcon from "@material-ui/icons/Chat";
 import { Link } from "react-router-dom";
 
 // import components
 import LoginDialog from "features/Login/components/LoginDialog/LoginDialog";
 import Profile from "features/Login/components/Profile/Profile";
+import ChatPage from "features/Chat/pages/ChatPage";
 
 // import hooks
 import useLoginDialog from "hooks/useLoginDialog";
 import { checkEmptyObject } from "utils/checkEmptyObject";
 import { useAuth } from "hooks";
 import { useSelector } from "react-redux";
+import { PATH_NAME } from "configs";
+import useChat from "hooks/useChat";
 
 const useStyle = makeStyles((theme) => ({
   container: {
@@ -66,6 +70,23 @@ const HeaderButtons = () => {
     toggleAccount,
   } = useLoginDialog();
 
+  const {
+    openChatBox,
+    minisizeChatBox,
+    setOpenChatBox,
+    classesChat,
+    setMiniSizeChatBox,
+    addMoreButtons,
+    setAddMoreButton,
+    result,
+    handleChange,
+    handleSubmit,
+    handleRemoveFile,
+    files,
+    message,
+    handleOpen,
+  } = useChat();
+
   const { user } = useAuth();
 
   const { cartItems } = useSelector((state) => state.cart);
@@ -87,10 +108,20 @@ const HeaderButtons = () => {
       )}
 
       {/* </Link> */}
-      <Link to="/payment">
+      <Link to={PATH_NAME.PAYMENT}>
         <Typography style={{ marginTop: 5 }}>Payment</Typography>
       </Link>
-      <Link to="/cart" className={classes.container}>
+
+      {/* <Link to={PATH_NAME.CHAT} className={classes.container}> */}
+      <Button onClick={handleOpen}>
+        <ChatIcon />
+        <Typography style={{ marginLeft: 10 }} className={classes.chat}>
+          Chat
+        </Typography>
+      </Button>
+      {/* </Link> */}
+
+      <Link to={PATH_NAME.CART} className={classes.container}>
         <Badge
           badgeContent={cartItems.length && cartItems.length}
           color="secondary"
@@ -106,6 +137,25 @@ const HeaderButtons = () => {
         toggleAccount={toggleAccount}
         handleSubmitLoginForm={handleSubmitLoginForm}
         handleSubmitSignupForm={handleSubmitSignupForm}
+      />
+
+      <ChatPage
+        props={{
+          openChatBox,
+          minisizeChatBox,
+          setOpenChatBox,
+          classes: classesChat,
+          setMiniSizeChatBox,
+          addMoreButtons,
+          setAddMoreButton,
+          result,
+          handleChange,
+          handleSubmit,
+          handleRemoveFile,
+          files,
+          user,
+          message,
+        }}
       />
     </Box>
   );

@@ -15,7 +15,6 @@ import Header from "shareComponent/Header/Header";
 
 import { TemplateProvider } from "template/TemplateProvider";
 import { Box } from "@material-ui/core";
-import Chat from "services/chat";
 
 // configs:
 import { PATH_NAME } from "configs";
@@ -23,6 +22,7 @@ import { PATH_NAME } from "configs";
 // routes
 import PrivateRoute from "shareComponent/PrivateRoute/PrivateRoute";
 import GuestRoute from "shareComponent/GuestRoute/GuestRoute";
+import ChatRoute from "features/Chat";
 
 const Test = React.lazy(() => import("./features/Test"));
 
@@ -44,8 +44,13 @@ function App() {
               <GuestRoute path={LOGIN} component={LoginRoute} />
               <Route path={PRODUCT} component={ProductRoute} />
               <Route path={CART} component={CartRoute} />
-              <Route path={CHAT} component={Chat} />
 
+              {/* Private route */}
+              <PrivateRoute
+                path={CHAT}
+                component={ChatRoute}
+                requireRoles={["ADMIN", "GUEST"]}
+              />
               <PrivateRoute
                 path={TEST}
                 component={Test}
