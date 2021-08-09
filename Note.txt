@@ -33,5 +33,8 @@ npm i mongoose-findorcreate
 npm install --save stripe
 npm i aws-sdk multer
 
+Docker
+docker tag image_name hainguyenvan6799webdev/name:version
+docker push hainguyenvan6799webdev/name:version
 
 

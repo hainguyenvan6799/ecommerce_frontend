@@ -1,5 +1,7 @@
 import { Box, Typography, makeStyles, Button } from '@material-ui/core';
+import { PATH_NAME } from 'configs';
 import React from 'react'
+import { Link } from 'react-router-dom';
 import CartItem from './CartItem';
 
 const useStyle = makeStyles({
@@ -40,7 +42,7 @@ function LeftCartComponent(props) {
                 })
             }
             <Box className={classes.bottom}>
-                <Button className={classes.placeOrder} variant="contained">Place order</Button>
+                <Button className={classes.placeOrder} variant="contained"><Link style={{ textDecoration: "none", color: "white" }} to={PATH_NAME.PAYMENT}>Place order</Link></Button>
             </Box>
         </>
     )

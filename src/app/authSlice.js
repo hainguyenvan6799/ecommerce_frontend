@@ -45,7 +45,7 @@ const authSlice = createSlice({
   extraReducers: {
     [getMe.pending]: (state, action) => {
       state.loading = true;
-      state.isAuthenticated = null;
+      state.isAuthenticated = false;
     },
     [getMe.rejected]: (state, action) => {
       state.loading = false;
@@ -57,7 +57,6 @@ const authSlice = createSlice({
       if (action.payload.user) {
         state.user = action.payload.user;
       }
-
       state.isAuthenticated = true;
     },
   },

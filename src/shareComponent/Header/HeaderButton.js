@@ -88,7 +88,7 @@ const HeaderButtons = () => {
 
       {/* </Link> */}
       <Link to="/payment">
-        <Typography style={{ marginTop: 5 }}>More</Typography>
+        <Typography style={{ marginTop: 5 }}>Payment</Typography>
       </Link>
       <Link to="/cart" className={classes.container}>
         <Badge

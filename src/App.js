@@ -46,7 +46,11 @@ function App() {
               <Route path={CART} component={CartRoute} />
               <Route path={CHAT} component={Chat} />
 
-              <PrivateRoute path={TEST} component={Test} />
+              <PrivateRoute
+                path={TEST}
+                component={Test}
+                requireRoles={["ADMIN", "GUEST"]}
+              />
               <PrivateRoute
                 path={PAYMENT}
                 component={PaymentRoute}
