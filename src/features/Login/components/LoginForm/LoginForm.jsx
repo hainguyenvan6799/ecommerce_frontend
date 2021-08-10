@@ -1,7 +1,7 @@
 import { Box, Button, FormGroup, makeStyles, Typography } from '@material-ui/core';
 import InputField from 'customField/InputField/InputField';
 import { FastField, Form, Formik } from 'formik';
-import { useAuth, useLoginDialog } from 'hooks';
+import { useAuth } from 'hooks';
 import React from 'react';
 import { initialValues, validationSchema } from './formikConfig';
 
@@ -48,14 +48,13 @@ function LoginForm(props) {
     const classes = useStyle();
 
     // get props from LoginDialog.jsx
-    const { handleSubmitLoginForm } = useLoginDialog();
-    const { authError } = useAuth();
+    const { handleSubmitLogin, authError } = useAuth();
     return (
         <Box className={classes.login}>
             <Formik
                 initialValues={initialValues}
                 validationSchema={validationSchema}
-                onSubmit={handleSubmitLoginForm}
+                onSubmit={handleSubmitLogin}
                 validateOnMount={true}
             >
                 {formikProps => {

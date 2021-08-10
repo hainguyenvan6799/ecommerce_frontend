@@ -37,4 +37,7 @@ Docker
 docker tag image_name hainguyenvan6799webdev/name:version
 docker push hainguyenvan6799webdev/name:version
 
+// validate with enum yup
+let schema = yup.mixed().oneOf(['jimmy', 42]);
+
 

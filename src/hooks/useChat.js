@@ -11,10 +11,13 @@ import { fileApi } from "api/fileApi";
 import { socket } from "services/socket";
 
 // configs
-import { SOCKET_EVENTS } from "configs";
+import { PATH_NAME, SOCKET_EVENTS } from "configs";
 
 // utils
 import { customId, customSubString } from "utils/subString";
+
+// hooks
+import { useHistory } from "react-router-dom";
 
 const useStyle = makeStyles({
   content: {
@@ -184,34 +187,41 @@ const useChat = () => {
   const [message, setMessage] = useState("");
   const [files, setFiles] = useState([]);
   const [result, setResult] = useState([]);
-  const [openChatBox, setOpenChatBox] = useState(true);
+  const [openChatBox, setOpenChatBox] = useState(false);
   const [minisizeChatBox, setMiniSizeChatBox] = useState(false);
   const [addMoreButtons, setAddMoreButton] = useState(false);
   const { user } = useSelector((state) => state.auth);
   const classes = useStyle();
+  const history = useHistory();
 
   useEffect(() => {
-    socket.on(SOCKET_EVENTS.CHAT, function (args) {
-      const { from, to, message, files } = args;
-      if (to === user.username || from === user.username) {
-        const sendFiles = JSON.parse(files);
+    if (user) {
+      socket.on(SOCKET_EVENTS.CHAT, function (args) {
+        const { from, to, message, files } = args;
+        if (to === user.username || from === user.username) {
+          const sendFiles = JSON.parse(files);
 
-        setResult((prevMessage) => [
-          ...prevMessage,
-          { from, to, message, files: sendFiles },
-        ]);
-      }
-    });
+          setResult((prevMessage) => [
+            ...prevMessage,
+            { from, to, message, files: sendFiles },
+          ]);
+        }
+      });
+    }
 
     return () => {
       //   socket.emit("disconnect");
       socket.off();
     };
-  }, [user.username]);
+  }, [user]);
 
   const handleOpen = () => {
-    setOpenChatBox(true);
-    setMiniSizeChatBox(false);
+    if (!user) {
+      history.push(PATH_NAME.LOGIN);
+    } else {
+      setOpenChatBox(true);
+      setMiniSizeChatBox(false);
+    }
   };
 
   const handleChange = (e) => {

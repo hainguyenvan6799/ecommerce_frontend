@@ -10,7 +10,6 @@ import ChatPage from "features/Chat/pages/ChatPage";
 
 // import hooks
 import useLoginDialog from "hooks/useLoginDialog";
-import { checkEmptyObject } from "utils/checkEmptyObject";
 import { useAuth } from "hooks";
 import { useSelector } from "react-redux";
 import { PATH_NAME } from "configs";
@@ -95,7 +94,7 @@ const HeaderButtons = () => {
   return (
     <Box className={classes.wrapper}>
       {/* <Link> */}
-      {!checkEmptyObject(user) ? (
+      {user ? (
         <Profile account={user} />
       ) : (
         <Button
@@ -142,6 +141,7 @@ const HeaderButtons = () => {
       <ChatPage
         props={{
           openChatBox,
+          handleOpen,
           minisizeChatBox,
           setOpenChatBox,
           classes: classesChat,

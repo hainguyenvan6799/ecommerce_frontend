@@ -7,7 +7,7 @@ export const useLoginDialog = () => {
   const dispatch = useDispatch();
 
   // declare hooks:
-  const { login, signup } = useAuth();
+  const { signup, handleSubmitLogin } = useAuth();
   const [open, setOpen] = useState(false);
 
   // initial values
@@ -49,8 +49,9 @@ export const useLoginDialog = () => {
 
   // @desc handle submit signin form
   const handleSubmitLoginForm = async (values) => {
-    const { username, password } = values;
-    const result = await login(username, password);
+    // const { username, password } = values;
+    // const result = await login(username, password);
+    const result = await handleSubmitLogin(values);
     if (result) {
       handleCloseLoginDialog();
     }

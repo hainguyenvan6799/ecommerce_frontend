@@ -41,6 +41,13 @@ export const useAuth = () => {
     }
   };
 
+  const handleSubmitLogin = async (values) => {
+    const { username, password } = values;
+    const result = await login(username, password);
+
+    return result;
+  };
+
   const logout = () => {
     localStorage.removeItem("accessToken");
     dispatch(logOut());
@@ -97,5 +104,14 @@ export const useAuth = () => {
     };
   }, [dispatch, token]);
 
-  return { authUser, login, signup, logout, authError, user, isAuthenticated };
+  return {
+    authUser,
+    login,
+    signup,
+    logout,
+    authError,
+    user,
+    isAuthenticated,
+    handleSubmitLogin,
+  };
 };

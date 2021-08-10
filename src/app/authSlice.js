@@ -8,7 +8,8 @@ export const getMe = createAsyncThunk("auth/getMe", (params, thunkApi) => {
 });
 
 const initialState = {
-  user: {},
+  // user: {},
+  user: null,
   loading: false,
   isAuthenticated: null,
   error: "",
@@ -36,7 +37,7 @@ const authSlice = createSlice({
     logOut: (state, action) => {
       state.loading = false;
       state.isAuthenticated = false;
-      state.user = {};
+      state.user = null;
     },
     setError: (state, action) => {
       state.error = action.payload.error;
