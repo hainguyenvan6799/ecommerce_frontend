@@ -7,7 +7,7 @@ import RemoveCircleOutlineIcon from "@material-ui/icons/RemoveCircleOutline";
 import personalImage from "img/thuthu.png";
 
 const TopChat = (props) => {
-    const { classes, setMiniSizeChatBox } = props;
+    const { classes, handleCloseMiniChatBox } = props;
     return (
         <div className={classes.topContent + " container"}>
             <div className={classes.leftTopContent + " container"}>
@@ -18,7 +18,7 @@ const TopChat = (props) => {
                 <RemoveCircleOutlineIcon
                     className={classes.button}
                     fontSize="large"
-                    onClick={() => setMiniSizeChatBox(true)}
+                    onClick={handleCloseMiniChatBox}
                 />
                 <CloseIcon className={classes.button} fontSize="large" />
             </div>

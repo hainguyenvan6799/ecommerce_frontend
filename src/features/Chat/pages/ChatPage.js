@@ -13,32 +13,35 @@ const ChatPage = (props) => {
       handleOpen,
       minisizeChatBox,
       classes,
-      setMiniSizeChatBox,
       addMoreButtons,
       setAddMoreButton,
-      result,
       handleChange,
       handleSubmit,
       handleRemoveFile,
       user,
       files,
       message,
+      messages,
+      handleCloseMiniChatBox,
     },
   } = props;
 
   return openChatBox ? (
     !minisizeChatBox ? (
       <div className={classes.content}>
-        <TopChat classes={classes} setMiniSizeChatBox={setMiniSizeChatBox} />
+        <TopChat
+          classes={classes}
+          handleCloseMiniChatBox={handleCloseMiniChatBox}
+        />
 
         <MiddleChat
           classes={classes}
           addMoreButtons={addMoreButtons}
-          result={result}
           user={user}
           files={files}
           handleChange={handleChange}
           handleRemoveFile={handleRemoveFile}
+          messages={messages}
         />
 
         <BottomChat

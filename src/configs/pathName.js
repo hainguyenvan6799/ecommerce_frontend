@@ -1,4 +1,4 @@
-export const PATH_NAME = {
+const PATH_NAME = {
   ROOT: "/",
   ERROR_404: "/404",
   //   DASHBOARD: '/dashboard',
@@ -14,4 +14,14 @@ export const PATH_NAME = {
   USERS: "/users",
   KANBAN: "/kanban",
   NOTFOUND: "/notfound",
+  ADMINDASHBOARD: "/admin-dashboard",
+  ADMIN_USERLIST: "/admin-dashboard/user-list",
+
+  ADMIN_PRODUCTLIST: "/admin-dashboard/products",
+  ADMIN_NEWPRODUCT: "/admin-dashboard/newProduct",
+  ADMIN_PRODUCTDETAIL: "/admin-dashboard/product/:id",
+  ADMIN_LINKTOPRODUCTDETAIL: (productId) =>
+    `/admin-dashboard/product/${productId}`,
 };
+
+export { PATH_NAME };

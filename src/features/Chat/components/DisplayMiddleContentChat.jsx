@@ -4,34 +4,20 @@ import ScrollToBottom from "react-scroll-to-bottom";
 
 const DisplayMiddleContentChat = (props) => {
 
-    const { result, user, addMoreButtons, classes } = props;
+    const { user, addMoreButtons, classes, messages } = props;
 
     return (
         <ScrollToBottom
             className={addMoreButtons ? classes.ROOT_CSS : classes.ROOT_CSS_2}
         >
-            <p>ABC</p>
-            <p>ABC</p>
-            <p>ABC</p>
-            <p>ABC</p>
-            <p>ABC</p>
-            <p>ABC</p>
-            <p>ABC</p>
-            <p>ABC</p>
-            <p>ABC</p>
-            <p>ABC</p>
-            <p>ABC</p>
-            <p>ABC</p>
-            <p>ABC</p>
-            <p>ABC</p>
-            {result.length > 0 &&
-                result.map((item, id) => {
-                    return item.from === user.username ? (
-                        <div key={id}>
+            {messages.length > 0 &&
+                messages.map((item) => {
+                    return item.postedByUser._id === user._id ? (
+                        <div key={item._id}>
                             <div className={classes.messageLeftContent + " container"}>
-                                {item.files?.map((file, index) => (
+                                {item.files && JSON.parse(item.files)?.map((file) => (
                                     <a
-                                        key={index}
+                                        key={file.Key}
                                         href={file.Location}
                                         title="Download now"
                                     >
@@ -40,20 +26,20 @@ const DisplayMiddleContentChat = (props) => {
                                 ))}
                             </div>
 
-                            {item.message && (
+                            {item.message.messageText && (
                                 <div
                                     className={classes.messageLeftContent + " container"}
                                 >
-                                    <p>{item.message}</p>
+                                    <p>{item.message.messageText}</p>
                                 </div>
                             )}
                         </div>
                     ) : (
                         <div
-                            key={id}
+                            key={item._id}
                             className={classes.messageRightContent + " container"}
                         >
-                            <p>{item.message}</p>
+                            <p>{item.message.messageText}</p>
                         </div>
                     );
                 })}

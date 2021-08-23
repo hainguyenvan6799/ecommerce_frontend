@@ -120,11 +120,11 @@ function Slider(props) {
         itemClass="carousel-item-padding-40-px"
       >
         {productsData.map((product) => {
-          const { id, url, title, discount, tagline } = product;
+          const { _id, url, title, discount, tagline } = product;
 
           const { shortTitle } = title;
           return (
-            <Link to={`/product/${id}`} key={id}>
+            <Link to={`/product/${_id}`} key={_id}>
               <Box style={{ textAlign: "center" }} className={classes.wrapper}>
                 <img src={url} className={classes.image} alt="Products" />
                 <Typography

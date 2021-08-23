@@ -14,13 +14,14 @@ const initialState = {
   isAuthenticated: null,
   error: "",
   role: "GUEST",
+  accessToken: "",
 };
 
 const authSlice = createSlice({
   name: "auth",
   initialState: initialState,
   reducers: {
-    loginSuccess: (state) => {
+    loginSuccess: (state, action) => {
       state.loading = false;
       state.isAuthenticated = true;
     },
@@ -57,6 +58,7 @@ const authSlice = createSlice({
       state.loading = false;
       if (action.payload.user) {
         state.user = action.payload.user;
+        state.role = action.payload.user.role;
       }
       state.isAuthenticated = true;
     },

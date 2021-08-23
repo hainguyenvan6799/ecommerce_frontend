@@ -5,15 +5,15 @@ import DisplayFilesMiddleContentChat from './DisplayFilesMiddleContentChat';
 import DisplayMiddleContentChat from './DisplayMiddleContentChat';
 
 const MiddleChat = (props) => {
-    const { classes, addMoreButtons, result, user, files, handleChange, handleRemoveFile } = props;
+    const { classes, addMoreButtons, user, files, handleChange, handleRemoveFile, messages } = props;
     return (
         <div className={classes.middleContent}>
 
             <DisplayMiddleContentChat
-                result={result}
                 user={user}
                 addMoreButtons={addMoreButtons}
                 classes={classes}
+                messages={messages}
             />
 
             <DisplayFilesMiddleContentChat
@@ -21,6 +21,7 @@ const MiddleChat = (props) => {
                 files={files}
                 handleChange={handleChange}
                 handleRemoveFile={handleRemoveFile}
+                addMoreButtons={addMoreButtons}
             />
         </div>
     )

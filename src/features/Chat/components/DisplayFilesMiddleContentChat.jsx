@@ -7,6 +7,7 @@ import AttachmentIcon from "@material-ui/icons/Attachment";
 
 const DisplayFilesMiddleContentChat = (props) => {
     const { classes, addMoreButtons, files, handleChange, handleRemoveFile } = props;
+
     return (
         <div
             className={

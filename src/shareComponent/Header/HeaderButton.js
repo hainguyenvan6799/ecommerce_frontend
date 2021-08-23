@@ -14,6 +14,7 @@ import { useAuth } from "hooks";
 import { useSelector } from "react-redux";
 import { PATH_NAME } from "configs";
 import useChat from "hooks/useChat";
+import ShowMessagesFromRoomForAdmin from "features/Chat/components/ShowMessagesFromRoomForAdmin";
 
 const useStyle = makeStyles((theme) => ({
   container: {
@@ -74,7 +75,6 @@ const HeaderButtons = () => {
     minisizeChatBox,
     setOpenChatBox,
     classesChat,
-    setMiniSizeChatBox,
     addMoreButtons,
     setAddMoreButton,
     result,
@@ -83,7 +83,11 @@ const HeaderButtons = () => {
     handleRemoveFile,
     files,
     message,
+    messages,
     handleOpen,
+    messagesAdmin,
+    handleCloseMiniChatBox,
+    handleOpenInAdmin,
   } = useChat();
 
   const { user } = useAuth();
@@ -112,12 +116,20 @@ const HeaderButtons = () => {
       </Link>
 
       {/* <Link to={PATH_NAME.CHAT} className={classes.container}> */}
-      <Button onClick={handleOpen}>
-        <ChatIcon />
-        <Typography style={{ marginLeft: 10 }} className={classes.chat}>
-          Chat
-        </Typography>
-      </Button>
+      {user.username !== "admin" ? (
+        <Button onClick={handleOpen}>
+          <ChatIcon />
+          <Typography style={{ marginLeft: 10 }} className={classes.chat}>
+            Chat
+          </Typography>
+        </Button>
+      ) : (
+        <ShowMessagesFromRoomForAdmin
+          messagesAdmin={messagesAdmin}
+          handleOpenInAdmin={handleOpenInAdmin}
+        />
+      )}
+
       {/* </Link> */}
 
       <Link to={PATH_NAME.CART} className={classes.container}>
@@ -145,7 +157,6 @@ const HeaderButtons = () => {
           minisizeChatBox,
           setOpenChatBox,
           classes: classesChat,
-          setMiniSizeChatBox,
           addMoreButtons,
           setAddMoreButton,
           result,
@@ -155,6 +166,8 @@ const HeaderButtons = () => {
           files,
           user,
           message,
+          messages,
+          handleCloseMiniChatBox,
         }}
       />
     </Box>

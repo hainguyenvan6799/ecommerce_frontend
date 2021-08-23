@@ -1,23 +1,18 @@
-import { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core";
-
-// redux
-import { useSelector } from "react-redux";
-
-// api
-import { fileApi } from "api/fileApi";
-
-// services
-import { socket } from "services/socket";
-
+import { chatApi } from "api/chatApi";
+import { chatMessageApi } from "api/chatMessage";
 // configs
 import { PATH_NAME, SOCKET_EVENTS } from "configs";
-
-// utils
-import { customId, customSubString } from "utils/subString";
-
+import { ADMiN_INFO } from "configs/adminInfo";
+import { useEffect, useState } from "react";
+// redux
+import { useSelector } from "react-redux";
 // hooks
 import { useHistory } from "react-router-dom";
+// services
+import { socket } from "services/socket";
+// utils
+import { customId, customSubString } from "utils/subString";
 
 const useStyle = makeStyles({
   content: {
@@ -186,41 +181,145 @@ const useStyle = makeStyles({
 const useChat = () => {
   const [message, setMessage] = useState("");
   const [files, setFiles] = useState([]);
-  const [result, setResult] = useState([]);
   const [openChatBox, setOpenChatBox] = useState(false);
   const [minisizeChatBox, setMiniSizeChatBox] = useState(false);
   const [addMoreButtons, setAddMoreButton] = useState(false);
   const { user } = useSelector((state) => state.auth);
   const classes = useStyle();
   const history = useHistory();
+  const [chatRoom, setChatRoom] = useState("");
+  const [messages, setMessages] = useState([]);
+  const [messagesAdmin, setMessagesAdmin] = useState([]);
 
   useEffect(() => {
     if (user) {
-      socket.on(SOCKET_EVENTS.CHAT, function (args) {
-        const { from, to, message, files } = args;
-        if (to === user.username || from === user.username) {
-          const sendFiles = JSON.parse(files);
-
-          setResult((prevMessage) => [
-            ...prevMessage,
-            { from, to, message, files: sendFiles },
-          ]);
-        }
-      });
+      socket.emit(SOCKET_EVENTS.IDENTIFY, user._id);
     }
 
     return () => {
-      //   socket.emit("disconnect");
       socket.off();
     };
   }, [user]);
 
-  const handleOpen = () => {
+  useEffect(() => {
+    if (user) {
+      socket.on(SOCKET_EVENTS.CHAT, function (args) {
+        // const { from, to, message, files } = args;
+        // if (to === user.username || from === user.username) {
+        //   const sendFiles = JSON.parse(files);
+
+        //   setResult((prevMessage) => [
+        //     ...prevMessage,
+        //     { from, to, message, files: sendFiles },
+        //   ]);
+        // }
+        const {
+          message: {
+            chatRoomInfo,
+            message,
+            postedByUser,
+            chatRoomId,
+            createdAt,
+            readByRecipients,
+            type,
+            updatedAt,
+            _id,
+          },
+          files,
+        } = args;
+        chatRoomInfo.map((item) => {
+          if (item._id === user._id) {
+            setMessages((prev) => [
+              ...prev,
+              {
+                _id,
+                updatedAt,
+                type,
+                readByRecipients,
+                postedByUser,
+                message,
+                chatRoomId,
+                createdAt,
+                files,
+              },
+            ]);
+            return true;
+          }
+          return false;
+        });
+      });
+    }
+  }, [user]);
+
+  const getChatRoomsOfUserId = async (user) => {
+    const data = {
+      userId: user._id,
+    };
+
+    const response = await chatApi.getChatRoomsOfUserId(data);
+    if (response.data.success) {
+      if (user.username === ADMiN_INFO.USERNAME) {
+        setMessagesAdmin((prev) => [...prev, ...response.data.chatRooms]);
+      }
+
+      return response.data.chatRooms;
+    } else {
+      return null;
+    }
+  };
+
+  useEffect(() => {
+    const subscribeChatRoom = async () => {
+      const chatRooms = await getChatRoomsOfUserId(user);
+      if (chatRooms) {
+        chatRooms.map((chatRoom) => {
+          socket.emit(SOCKET_EVENTS.SUBSCRIBE, chatRoom._id);
+          if (user.username !== ADMiN_INFO.USERNAME) {
+            setChatRoom(chatRoom._id);
+          }
+
+          return chatRoom;
+        });
+      }
+    };
+
+    if (user) {
+      subscribeChatRoom();
+    }
+  }, [user]);
+
+  const handleOpenInAdmin = async (chatRoomId) => {
     if (!user) {
       history.push(PATH_NAME.LOGIN);
     } else {
-      setOpenChatBox(true);
-      setMiniSizeChatBox(false);
+      const result = await chatApi.getConversationByRoomId(chatRoomId);
+      if (result.success) {
+        const oldMessages = result.conversation;
+        setMessages((prevMessages) => [...prevMessages, ...oldMessages]);
+        setChatRoom(chatRoomId);
+
+        setOpenChatBox(true);
+        setMiniSizeChatBox(false);
+      }
+    }
+  };
+
+  const handleOpen = async () => {
+    if (!user) {
+      history.push(PATH_NAME.LOGIN);
+    } else {
+      if (chatRoom) {
+        const result = await chatApi.getConversationByRoomId(chatRoom);
+        if (result.success) {
+          const oldMessages = result.conversation;
+          setMessages((prevMessages) => [...prevMessages, ...oldMessages]);
+
+          setOpenChatBox(true);
+          setMiniSizeChatBox(false);
+        }
+      } else {
+        alert("wait to load room id");
+      }
     }
   };
 
@@ -230,15 +329,6 @@ const useChat = () => {
       const filesArr = [];
 
       for (let i = 0; i < files.length; i++) {
-        // if (files[i].name.length > 13) {
-        //   filesArr.push({
-        //     id: `${Date.now()}_${i}`,
-        //     name: `${files[i].name.substring(0, 12)}...`,
-        //     file: files[i],
-        //   });
-        // } else {
-        //   filesArr.push({ name: files[i].name, file: files[i] });
-        // }
         filesArr.push({
           id: customId(i),
           name: customSubString(files[i].name, 13),
@@ -252,28 +342,50 @@ const useChat = () => {
     }
   };
 
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   const formData = new FormData();
+  //   for (let i = 0; i < files.length; i++) {
+  //     formData.append("myfiles", files[i].file);
+  //   }
+  //   const result = await fileApi.uploadFiles(formData);
+  //   const resultInString = JSON.stringify(result.arr);
+
+  //   socket.emit(SOCKET_EVENTS.CHAT, {
+  //     from: user.username,
+  //     to: "admin",
+  //     message,
+  //     files: resultInString,
+  //   });
+  //   setMessage("");
+  // };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const formData = new FormData();
-    for (let i = 0; i < files.length; i++) {
-      formData.append("myfiles", files[i].file);
-    }
-    const result = await fileApi.uploadFiles(formData);
-    const resultInString = JSON.stringify(result.arr);
 
-    socket.emit(SOCKET_EVENTS.CHAT, {
-      from: user.username,
-      to: "admin",
-      message,
-      files: resultInString,
-    });
-    setMessage("");
+    const formData = new FormData();
+    if (files.length > 0) {
+      for (let i = 0; i < files.length; i++) {
+        formData.append("myfiles", files[i].file);
+      }
+    }
+
+    formData.append("messageText", message);
+    // await chatMessageApi.sendMessageToRoom(chatRoom, {
+    //   messageText: message,
+    // });
+    await chatMessageApi.sendMessageToRoom(chatRoom, formData);
   };
 
   const handleRemoveFile = (id) => {
     // const newFiles = files.filter((file) => file.id !== id);
     // setFiles(newFiles);
     setFiles((prevFiles) => prevFiles.filter((file) => file.id !== id));
+  };
+
+  const handleCloseMiniChatBox = () => {
+    setMiniSizeChatBox(true);
+    setMessages([]);
   };
 
   return {
@@ -284,7 +396,6 @@ const useChat = () => {
     setMiniSizeChatBox,
     addMoreButtons,
     setAddMoreButton,
-    result,
     handleChange,
     handleSubmit,
     handleRemoveFile,
@@ -292,6 +403,10 @@ const useChat = () => {
     user,
     message,
     handleOpen,
+    messages,
+    messagesAdmin,
+    handleCloseMiniChatBox,
+    handleOpenInAdmin,
   };
 };
 
