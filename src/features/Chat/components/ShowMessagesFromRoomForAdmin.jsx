@@ -45,8 +45,6 @@ export default function ShowMessagesFromRoomForAdmin({ messagesAdmin, handleOpen
 
     const messagesAfterRemoveDupplicate = removeDupplicateArray(messagesAdmin);
 
-    console.log(messagesAfterRemoveDupplicate)
-
     const handleClick = () => {
         setOpen((prev) => !prev);
     };

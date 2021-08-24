@@ -3,6 +3,7 @@ import { PATH_NAME } from "configs"
 import InputField from "customField/InputField/InputField"
 import Chart from "features/AdminDashboard/components/chart/Chart"
 import { FastField, Form, Formik } from "formik"
+import { useProduct } from "hooks"
 import { useEffect, useState } from "react"
 import { Link, useParams } from "react-router-dom"
 import { validationSchema } from "./formikConfig"
@@ -23,17 +24,13 @@ const productData = [
     }
 ]
 
-function Product({ detailProduct, previewImgUrl, setPreviewImgUrl, setDetailProductId, handleUpdateProduct, setFile }) {
+function Product() {
 
     // http://localhost:3000/admin-dashboard/product/60d832241b4464232cf2d9e2
     const { id } = useParams();
-    const [initialValues, setInitialValues] = useState(null);
+    const { detailProduct, previewImgUrl, setPreviewImgUrl, handleUpdateProduct, setFile } = useProduct(id);
 
-    useEffect(() => {
-        if (id) {
-            setDetailProductId(id)
-        }
-    }, [id]);
+    const [initialValues, setInitialValues] = useState(null);
 
     useEffect(() => {
         if (detailProduct) {

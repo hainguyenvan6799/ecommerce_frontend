@@ -3,11 +3,16 @@ import { DataGrid } from "@material-ui/data-grid";
 import { Link } from "react-router-dom";
 import { DeleteOutline } from "@material-ui/icons";
 import { PATH_NAME } from "configs";
+import { useProduct } from "hooks";
+import { useSelector } from "react-redux";
 
-function ProductList({ products, handleRemoveProduct }) {
+function ProductList() {
+
+    const { products } = useSelector(state => state.product);
+    const { handleRemoveProduct } = useProduct();
 
     const columns = [
-        { field: "id", headerName: "ID", width: 200 },
+        { field: "id", headerName: "ID", width: 200, renderCell: (params) => params.row._id },
         {
             field: "Product", headerName: "Product", width: 200, renderCell: (params) => {
                 return (
@@ -44,7 +49,7 @@ function ProductList({ products, handleRemoveProduct }) {
     return (
         <div className="product-list">
             <DataGrid
-                rows={products}
+                rows={products.map(product => { return { id: product._id, ...product } })}
                 disableSelectionOnClick
                 columns={columns}
                 rowsPerPageOptions={[8, 10, 20]}

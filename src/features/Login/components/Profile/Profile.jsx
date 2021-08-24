@@ -8,7 +8,6 @@ import { PATH_NAME } from "configs";
 import { useProfile } from 'hooks/useProfile';
 import React from 'react';
 import { Link } from "react-router-dom";
-import CheckAdmin from "shareComponent/CheckAdmin/CheckAdmin";
 
 const useStyle = makeStyles({
     component: {
@@ -42,11 +41,11 @@ function Profile(props) {
                 open={Boolean(open)}
                 onClose={handleClose}
             >
-                <CheckAdmin>
+                {account.role === "ADMIN" && (
                     <MenuItem><SupervisorAccountIcon fontSize="small" color="primary" />
                         <Link to={PATH_NAME.ADMINDASHBOARD} className={classes.adminDashboardButton}>Dashboard</Link>
                     </MenuItem>
-                </CheckAdmin>
+                )}
 
                 <MenuItem><PowerSettingsNewIcon fontSize="small" color="primary" />
                     <Typography onClick={handleLogOut} className={classes.logout}>Logout</Typography>

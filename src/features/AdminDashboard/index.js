@@ -1,5 +1,5 @@
 import { PATH_NAME } from "configs";
-import { useProduct } from "hooks";
+// import { useProduct } from "hooks";
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import SideBar from "./components/SideBar/SideBar";
@@ -12,17 +12,17 @@ import ProductList from "./pages/ManageProducts/ProductList/ProductList";
 import UserList from "./pages/ManageUser/UserList";
 
 const AdminDashboardRoute = () => {
-  const {
-    file,
-    setFile,
-    products,
-    handleRemoveProduct,
-    detailProduct,
-    handleUpdateProduct,
-    setDetailProductId,
-    previewImgUrl,
-    setPreviewImgUrl,
-  } = useProduct();
+  // const {
+  //   // file,
+  //   // setFile,
+  //   // products,
+  //   // handleRemoveProduct,
+  //   // detailProduct,
+  //   // handleUpdateProduct,
+  //   // setDetailProductId,
+  //   // previewImgUrl,
+  //   // setPreviewImgUrl,
+  // } = useProduct();
 
   return (
     <Router>
@@ -48,8 +48,8 @@ const AdminDashboardRoute = () => {
             path={PATH_NAME.ADMIN_PRODUCTLIST}
             component={() => (
               <ProductList
-                products={products}
-                handleRemoveProduct={handleRemoveProduct}
+              // products={products}
+              // handleRemoveProduct={handleRemoveProduct}
               />
             )}
           />
@@ -62,13 +62,13 @@ const AdminDashboardRoute = () => {
             path={PATH_NAME.ADMIN_PRODUCTDETAIL}
             component={() => (
               <Product
-                file={file}
-                previewImgUrl={previewImgUrl}
-                setPreviewImgUrl={setPreviewImgUrl}
-                setFile={setFile}
-                detailProduct={detailProduct}
-                handleUpdateProduct={handleUpdateProduct}
-                setDetailProductId={setDetailProductId}
+              // file={file}
+              // previewImgUrl={previewImgUrl}
+              // setPreviewImgUrl={setPreviewImgUrl}
+              // setFile={setFile}
+              // detailProduct={detailProduct}
+              // handleUpdateProduct={handleUpdateProduct}
+              // setDetailProductId={setDetailProductId}
               />
             )}
           />

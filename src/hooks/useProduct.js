@@ -9,13 +9,13 @@ import {
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
-export const useProduct = () => {
+export const useProduct = (id = null) => {
   const dispatch = useDispatch();
 
   const [products, setProducts] = useState([]);
 
   // using for show detail product
-  const [detailProductId, setDetailProductId] = useState(null);
+  // const [detailProductId, setDetailProductId] = useState(null);
   const [detailProduct, setDetailProduct] = useState(null);
   const [file, setFile] = useState(null);
   const [previewImgUrl, setPreviewImgUrl] = useState(null);
@@ -39,6 +39,8 @@ export const useProduct = () => {
     const dataInString = JSON.stringify(data);
     formData.append("data", dataInString);
     let updatedProduct;
+
+    console.log("thong tin file: ", file);
     if (file) {
       formData.append("myfile", file);
 
@@ -82,7 +84,6 @@ export const useProduct = () => {
     fetchProducts();
 
     return () => {
-      console.log("đang un mount");
       setProducts([]);
     };
   }, [dispatch]);
@@ -101,10 +102,10 @@ export const useProduct = () => {
       }
     };
 
-    if (detailProductId) {
-      productById(detailProductId);
+    if (id) {
+      productById(id);
     }
-  }, [detailProductId]);
+  }, [id]);
 
   return {
     file,
@@ -114,7 +115,7 @@ export const useProduct = () => {
     addProduct,
     handleUpdateProduct,
     handleRemoveProduct,
-    setDetailProductId,
+    // setDetailProductId,
     previewImgUrl,
     setPreviewImgUrl,
   };
