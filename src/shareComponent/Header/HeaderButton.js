@@ -116,18 +116,27 @@ const HeaderButtons = () => {
       </Link>
 
       {/* <Link to={PATH_NAME.CHAT} className={classes.container}> */}
-      {user.username !== "admin" ? (
+      {user ? (
+        user.username !== "admin" ? (
+          <Button onClick={handleOpen}>
+            <ChatIcon />
+            <Typography style={{ marginLeft: 10 }} className={classes.chat}>
+              Chat
+            </Typography>
+          </Button>
+        ) : (
+          <ShowMessagesFromRoomForAdmin
+            messagesAdmin={messagesAdmin}
+            handleOpenInAdmin={handleOpenInAdmin}
+          />
+        )
+      ) : (
         <Button onClick={handleOpen}>
           <ChatIcon />
           <Typography style={{ marginLeft: 10 }} className={classes.chat}>
             Chat
           </Typography>
         </Button>
-      ) : (
-        <ShowMessagesFromRoomForAdmin
-          messagesAdmin={messagesAdmin}
-          handleOpenInAdmin={handleOpenInAdmin}
-        />
       )}
 
       {/* </Link> */}
