@@ -1,34 +1,16 @@
+import { Publish } from "@material-ui/icons";
 import InputField from "customField/InputField/InputField";
 import { FastField, Form, Formik } from "formik";
+import { useProduct } from "hooks";
 import { initialValues, validationSchema } from "./formikConfig";
 import "./newproduct.css";
 
-function NewProduct({ addProduct }) {
+function NewProduct() {
+    const { setFile, addProduct, previewImgUrl, setPreviewImgUrl } = useProduct();
+
     return (
         <div className="newproduct">
             <h1 className="addProductTitle">New Product</h1>
-            {/* <form className="addProductForm">
-                <div className="addProductItem">
-                    <label>Image</label>
-                    <input type="file" id="file" />
-                </div>
-                <div className="addProductItem">
-                    <label>Name</label>
-                    <input type="text" placeholder="Apple Airpods" />
-                </div>
-                <div className="addProductItem">
-                    <label>Stock</label>
-                    <input type="text" placeholder="123" />
-                </div>
-                <div className="addProductItem">
-                    <label>Active</label>
-                    <select name="active" id="active">
-                        <option value="yes">Yes</option>
-                        <option value="no">No</option>
-                    </select>
-                </div>
-                <button className="addProductButton">Create</button>
-            </form> */}
 
             <Formik
                 initialValues={initialValues}
@@ -42,7 +24,7 @@ function NewProduct({ addProduct }) {
 
                     return (
                         <Form className="addProductForm">
-                            <div className="addProductItem">
+                            {/* <div className="addProductItem">
                                 <FastField
                                     name="url"
                                     component={InputField}
@@ -64,7 +46,7 @@ function NewProduct({ addProduct }) {
                                 />
 
                                 {initialValues.url && <img src={initialValues.url} className="addProductImg" alt="No alternate" />}
-                            </div>
+                            </div> */}
 
                             <div className="addProductItem">
                                 <FastField
@@ -153,6 +135,18 @@ function NewProduct({ addProduct }) {
                                     placeholder="Enter product name..."
                                 />
                             </div>
+
+                            <div className="addProductItem">
+                                {previewImgUrl && <img src={previewImgUrl} alt="" className="productUploadImg" />}
+                                <label htmlFor="file">
+                                    <Publish />
+                                </label>
+                                <input accept=".png, .jpg, .jpeg" type="file" id="file" style={{ display: "none" }} onChange={(e) => {
+                                    setPreviewImgUrl(URL.createObjectURL(e.target.files[0]));
+                                    setFile(e.target.files[0])
+                                }} />
+                            </div>
+
                             <button className="addProductButton" type="submit"
                                 disabled={!isValid || isSubmitting}>Create</button>
 

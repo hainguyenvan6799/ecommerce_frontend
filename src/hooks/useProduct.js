@@ -17,9 +17,16 @@ export const useProduct = () => {
   // using for show detail product
   const [detailProductId, setDetailProductId] = useState(null);
   const [detailProduct, setDetailProduct] = useState(null);
+  const [file, setFile] = useState(null);
+  const [previewImgUrl, setPreviewImgUrl] = useState(null);
 
   const addProduct = async (data) => {
-    const newProduct = await productApi.addNewProduct(data);
+    const formData = new FormData();
+    const dataInString = JSON.stringify(data);
+    formData.append("data", dataInString);
+    formData.append("myfile", file);
+
+    const newProduct = await productApi.addNewProduct(formData);
 
     if (newProduct.success) {
       const action = addNewProduct({ newProduct: newProduct.product });
@@ -28,9 +35,20 @@ export const useProduct = () => {
   };
 
   const handleUpdateProduct = async (data) => {
-    const updatedProduct = await productApi.updateProduct(data);
+    const formData = new FormData();
+    const dataInString = JSON.stringify(data);
+    formData.append("data", dataInString);
+    let updatedProduct;
+    if (file) {
+      formData.append("myfile", file);
+
+      updatedProduct = await productApi.updateProduct(formData);
+    } else {
+      updatedProduct = await productApi.updateProduct(formData);
+    }
+
     if (updatedProduct.success) {
-      console.log(updatedProduct.product);
+      setDetailProduct(updatedProduct.product);
       const action = updateProduct({ updatedProduct: updatedProduct.product });
       await dispatch(action);
     }
@@ -89,11 +107,15 @@ export const useProduct = () => {
   }, [detailProductId]);
 
   return {
+    file,
+    setFile,
     products,
     detailProduct,
     addProduct,
     handleUpdateProduct,
     handleRemoveProduct,
     setDetailProductId,
+    previewImgUrl,
+    setPreviewImgUrl,
   };
 };

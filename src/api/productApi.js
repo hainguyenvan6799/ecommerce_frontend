@@ -17,7 +17,7 @@ export const productApi = {
     const url = `${productUrl}/insertANewProduct`;
     return axiosClient.post(url, data, {
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "multipart/form-data",
       },
     });
   },
@@ -26,7 +26,7 @@ export const productApi = {
     const url = `${productUrl}/updateAProduct`;
     return axiosClient.put(url, data, {
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "multipart/form-data",
       },
     });
   },

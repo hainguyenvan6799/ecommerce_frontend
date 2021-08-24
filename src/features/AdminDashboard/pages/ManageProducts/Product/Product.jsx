@@ -23,7 +23,7 @@ const productData = [
     }
 ]
 
-function Product({ detailProduct, setDetailProductId, handleUpdateProduct }) {
+function Product({ detailProduct, previewImgUrl, setPreviewImgUrl, setDetailProductId, handleUpdateProduct, setFile }) {
 
     // http://localhost:3000/admin-dashboard/product/60d832241b4464232cf2d9e2
     const { id } = useParams();
@@ -106,13 +106,13 @@ function Product({ detailProduct, setDetailProductId, handleUpdateProduct }) {
                         return (
                             <Form className="productForm">
                                 <div className="productFormLeft">
-                                    <FastField
+                                    {/* <FastField
                                         name="url"
                                         component={InputField}
 
                                         label="Image Link"
                                         placeholder="Enter your image link"
-                                    />
+                                    /> */}
 
                                     <FastField
                                         name="shortTitle"
@@ -189,11 +189,14 @@ function Product({ detailProduct, setDetailProductId, handleUpdateProduct }) {
                                 </div>
                                 <div className="productFormRight">
                                     <div className="productUpload">
-                                        <img src={initialValues.url} alt="" className="productUploadImg" />
+                                        <img src={previewImgUrl ? previewImgUrl : detailProduct.url} alt="" className="productUploadImg" />
                                         <label htmlFor="file">
                                             <Publish />
                                         </label>
-                                        <input type="file" id="file" style={{ display: "none" }} />
+                                        <input accept=".png, .jpg, .jpeg" type="file" id="file" style={{ display: "none" }} onChange={(e) => {
+                                            setPreviewImgUrl(URL.createObjectURL(e.target.files[0]));
+                                            setFile(e.target.files[0])
+                                        }} />
                                     </div>
 
                                     <button className="productButton" type="submit"

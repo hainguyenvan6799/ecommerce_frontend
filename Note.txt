@@ -37,6 +37,10 @@ npm install --save stripe
 npm i aws-sdk multer
 npm i @withvoid/make-validation --save
 
+client:
+docker build -t mern_client[this is name] . (dấu chấm này sẽ tự động tìm file dockerFile trong cái thư mục hiện tại)
+docker build -t mern_server[this is name]
+
 Docker
 docker tag image_name hainguyenvan6799webdev/name:version
 docker push hainguyenvan6799webdev/name:version

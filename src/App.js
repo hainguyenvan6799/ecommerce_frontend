@@ -46,9 +46,14 @@ function App() {
               <GuestRoute path={LOGIN} component={LoginRoute} />
               <Route path={PRODUCT} component={ProductRoute} />
               <Route path={CART} component={CartRoute} />
-              <Route path={ADMINDASHBOARD} component={AdminDashboardRoute} />
 
               {/* Private route */}
+              <PrivateRoute
+                path={ADMINDASHBOARD}
+                component={AdminDashboardRoute}
+                requireRoles={["ADMIN"]}
+              />
+
               <PrivateRoute
                 path={CHAT}
                 component={ChatRoute}

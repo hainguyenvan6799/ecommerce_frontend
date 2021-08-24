@@ -1,10 +1,14 @@
 // material ui
 import { makeStyles, Menu, MenuItem, Typography } from "@material-ui/core";
 import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew';
+import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
+import { PATH_NAME } from "configs";
 
 // declare hooks
 import { useProfile } from 'hooks/useProfile';
 import React from 'react';
+import { Link } from "react-router-dom";
+import CheckAdmin from "shareComponent/CheckAdmin/CheckAdmin";
 
 const useStyle = makeStyles({
     component: {
@@ -13,6 +17,10 @@ const useStyle = makeStyles({
     logout: {
         marginLeft: 20,
         fontSize: 14,
+    },
+    adminDashboardButton: {
+        textDecoration: "none",
+        color: "black",
     }
 })
 
@@ -34,6 +42,12 @@ function Profile(props) {
                 open={Boolean(open)}
                 onClose={handleClose}
             >
+                <CheckAdmin>
+                    <MenuItem><SupervisorAccountIcon fontSize="small" color="primary" />
+                        <Link to={PATH_NAME.ADMINDASHBOARD} className={classes.adminDashboardButton}>Dashboard</Link>
+                    </MenuItem>
+                </CheckAdmin>
+
                 <MenuItem><PowerSettingsNewIcon fontSize="small" color="primary" />
                     <Typography onClick={handleLogOut} className={classes.logout}>Logout</Typography>
                 </MenuItem>
