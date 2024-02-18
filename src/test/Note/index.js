@@ -5,8 +5,6 @@ import {
   toggleImportanceOf,
 } from "test/reducers/Note/noteActionCreator";
 
-import { connect } from "react-redux";
-
 const Note = ({ note, toggleImportance }) => {
   const label = note.important ? "make not important" : "make important";
 
