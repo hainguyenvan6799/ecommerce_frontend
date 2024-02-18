@@ -5,7 +5,9 @@ const paymentUrl = `${apiUrl}/payment`;
 
 export const paymentApi = {
   createPaymentIntent: (data) => {
-    const url = `${paymentUrl}/create-payment-intent`;
+    // const url = `${paymentUrl}/create-payment-intent`;
+    const url = `${paymentUrl}`;
+
     return axiosClient.post(url, data);
   },
 };

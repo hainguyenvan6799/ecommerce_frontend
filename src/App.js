@@ -24,14 +24,24 @@ import PrivateRoute from "shareComponent/PrivateRoute/PrivateRoute";
 import GuestRoute from "shareComponent/GuestRoute/GuestRoute";
 import ChatRoute from "features/Chat";
 import AdminDashboardRoute from "features/AdminDashboard";
+import NoteApp from "test/App";
 
 const Test = React.lazy(() => import("./features/Test"));
 
 function App() {
   const { authUser } = useAuth();
   const authResolved = useResolved(authUser);
-  const { ROOT, LOGIN, PRODUCT, CART, CHAT, TEST, PAYMENT, ADMINDASHBOARD } =
-    PATH_NAME;
+  const {
+    ROOT,
+    LOGIN,
+    PRODUCT,
+    CART,
+    CHAT,
+    TEST,
+    PAYMENT,
+    ADMINDASHBOARD,
+    NOTE,
+  } = PATH_NAME;
 
   return authResolved ? (
     <div>
@@ -46,6 +56,7 @@ function App() {
               <GuestRoute path={LOGIN} component={LoginRoute} />
               <Route path={PRODUCT} component={ProductRoute} />
               <Route path={CART} component={CartRoute} />
+              <Route path={NOTE} component={NoteApp} />
 
               {/* Private route */}
               <PrivateRoute

@@ -5,6 +5,7 @@ import React from 'react';
 // components:
 import LeftProductDetail from "../components/LeftProductDetail";
 import RightProductDetail from "../components/RightProductDetail";
+import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 
 
 const useStyle = makeStyles(theme => ({
@@ -49,11 +50,14 @@ const useStyle = makeStyles(theme => ({
 function ProductDetailPage() {
     const classes = useStyle();
 
+    const {id} = useParams();
+
     // hooks
-    const { detailProduct } = useProduct();
+    const { detailProduct } = useProduct(id);
 
     const date = new Date(new Date().getTime() + (5 * 24 * 60 * 60 * 1000));
 
+    console.log({detailProduct});
     return (
         <Box className={classes.component} style={{ marginTop: 50 }}>
             {detailProduct && (

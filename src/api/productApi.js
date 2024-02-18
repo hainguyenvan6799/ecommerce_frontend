@@ -14,7 +14,8 @@ export const productApi = {
     return axiosClient.get(url);
   },
   addNewProduct: (data) => {
-    const url = `${productUrl}/insertANewProduct`;
+    // const url = `${productUrl}/insertANewProduct`;
+    const url = `${productUrl}`;
     return axiosClient.post(url, data, {
       headers: {
         "Content-Type": "multipart/form-data",
@@ -22,8 +23,10 @@ export const productApi = {
     });
   },
 
-  updateProduct: (data) => {
-    const url = `${productUrl}/updateAProduct`;
+  updateProduct: (data, productId) => {
+    // const url = `${productUrl}/updateAProduct`;
+    const url = `${productUrl}/${productId}`;
+
     return axiosClient.put(url, data, {
       headers: {
         "Content-Type": "multipart/form-data",
@@ -32,7 +35,8 @@ export const productApi = {
   },
 
   deleteProduct: (deletedId) => {
-    const url = `${productUrl}/deleteAProduct/${deletedId}`;
+    // const url = `${productUrl}/deleteAProduct/${deletedId}`;
+    const url = `${productUrl}/${deletedId}`;
     return axiosClient.delete(url);
   },
 };
