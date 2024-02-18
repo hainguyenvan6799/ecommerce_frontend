@@ -5,7 +5,7 @@ import DisplayFilesMiddleContentChat from './DisplayFilesMiddleContentChat';
 import DisplayMiddleContentChat from './DisplayMiddleContentChat';
 
 const MiddleChat = (props) => {
-    const { classes, addMoreButtons, user, files, handleChange, handleRemoveFile, messages } = props;
+    const { classes, addMoreButtons, user, files, handleChange, handleRemoveFile, messages, scrollRef } = props;
     return (
         <div className={classes.middleContent}>
 
@@ -14,6 +14,7 @@ const MiddleChat = (props) => {
                 addMoreButtons={addMoreButtons}
                 classes={classes}
                 messages={messages}
+                scrollRef={scrollRef}
             />
 
             <DisplayFilesMiddleContentChat

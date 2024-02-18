@@ -4,10 +4,19 @@ import AddCircleIcon from "@material-ui/icons/AddCircle";
 import CancelIcon from "@material-ui/icons/Cancel";
 
 const BottomChat = (props) => {
-    const { classes, handleSubmit, addMoreButtons, setAddMoreButton, message, handleChange } = props;
+    const { classes, handleSubmit, addMoreButtons, setAddMoreButton, message, handleChange, scrollRef } = props;
+
+    const handleSendMessage = (event) => {
+        handleSubmit(event);
+        console.log({scrollRef})
+        if (!scrollRef.current) return;
+        console.log(scrollRef.current, 123)
+        scrollRef.current.scrollToBottom();
+    }
+
     return (
         <div className={classes.bottomContent}>
-            <form onSubmit={handleSubmit} className={classes.form}>
+            <form onSubmit={handleSendMessage} className={classes.form}>
                 {addMoreButtons ? (
                     <CancelIcon
                         className={classes.closeButton}

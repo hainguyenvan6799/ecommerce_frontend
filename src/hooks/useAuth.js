@@ -1,5 +1,12 @@
 import { unwrapResult } from "@reduxjs/toolkit";
-import { getMe, loginFail, logOut, setError, signupFail } from "app/authSlice";
+import {
+  getMe,
+  loginFail,
+  loginSuccess,
+  logOut,
+  setError,
+  signupFail,
+} from "app/authSlice";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -20,8 +27,8 @@ export const useAuth = () => {
       if (response.success) {
         localStorage.setItem("accessToken", response.accessToken);
 
-        // dispatch(loginSuccess());
-        dispatch(getMe());
+        dispatch(loginSuccess({ user: response.user }));
+        // dispatch(getMe());
 
         return true;
       } else {
@@ -52,8 +59,8 @@ export const useAuth = () => {
       if (response.success) {
         localStorage.setItem("accessToken", response.accessToken);
 
-        // dispatch(loginSuccess());
-        dispatch(getMe());
+        dispatch(loginSuccess({ user: response.user }));
+        // dispatch(getMe());
       } else {
         dispatch(signupFail({ error: response.message }));
       }

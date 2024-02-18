@@ -5,7 +5,8 @@ const chatMessageUrl = `${apiUrl}/chatmessage`;
 
 export const chatMessageApi = {
   sendMessageToRoom: (roomChatId, data) => {
-    const url = `${chatMessageUrl}/postMessage/${roomChatId}`;
+    // const url = `${chatMessageUrl}/postMessage/${roomChatId}`;
+    const url = `${chatMessageUrl}/${roomChatId}`;
     // data ==> form-data
     return axiosClient.post(url, data, {
       headers: {
