@@ -1,4 +1,7 @@
 const PATH_NAME = {
+  // test
+  NOTE: "/test/notes",
+
   ROOT: "/",
   ERROR_404: "/404",
   //   DASHBOARD: '/dashboard',

@@ -38,12 +38,13 @@ function LeftProductDetail(props) {
     const history = useHistory();
 
     const { product } = props;
+    console.log({product})
 
     // hooks
     const { addProductToCart } = useCart();
 
     const handleAddToCart = () => {
-        addProductToCart(product.id);
+        addProductToCart(product._id);
         history.push("/cart");
     }
 

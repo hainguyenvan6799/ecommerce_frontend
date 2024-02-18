@@ -252,17 +252,21 @@ const useChat = () => {
   }, [user]);
 
   const getChatRoomsOfUserId = async (user) => {
-    const data = {
-      userId: user._id,
-    };
+    // const data = {
+    //   userId: user._id,
+    // };
 
-    const response = await chatApi.getChatRoomsOfUserId(data);
-    if (response.data.success) {
+    const userId = user._id;
+
+    // const response = await chatApi.getChatRoomsOfUserId(data);
+    const response = await chatApi.getChatRoomsOfUserId(userId);
+
+    if (response.success) {
       if (user.username === ADMiN_INFO.USERNAME) {
-        setMessagesAdmin((prev) => [...prev, ...response.data.chatRooms]);
+        setMessagesAdmin((prev) => [...prev, ...response.chatRooms]);
       }
 
-      return response.data.chatRooms;
+      return response.chatRooms;
     } else {
       return null;
     }
@@ -375,6 +379,7 @@ const useChat = () => {
     //   messageText: message,
     // });
     await chatMessageApi.sendMessageToRoom(chatRoom, formData);
+    setMessage("");
   };
 
   const handleRemoveFile = (id) => {

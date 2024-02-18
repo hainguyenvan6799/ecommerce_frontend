@@ -36,6 +36,7 @@ export const useProduct = (id = null) => {
 
   const handleUpdateProduct = async (data) => {
     const formData = new FormData();
+    const { productId } = data;
     const dataInString = JSON.stringify(data);
     formData.append("data", dataInString);
     let updatedProduct;
@@ -44,9 +45,9 @@ export const useProduct = (id = null) => {
     if (file) {
       formData.append("myfile", file);
 
-      updatedProduct = await productApi.updateProduct(formData);
+      updatedProduct = await productApi.updateProduct(formData, productId);
     } else {
-      updatedProduct = await productApi.updateProduct(formData);
+      updatedProduct = await productApi.updateProduct(formData, productId);
     }
 
     if (updatedProduct.success) {
@@ -89,9 +90,11 @@ export const useProduct = (id = null) => {
   }, [dispatch]);
 
   useEffect(() => {
+    console.log('run inside here', id);
     const productById = async (id) => {
       try {
         const response = await productApi.getProductById(id);
+        console.log({response})
         if (response.success) {
           const { product } = response;
           setDetailProduct(product);

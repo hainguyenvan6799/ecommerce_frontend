@@ -1,6 +1,7 @@
-import { Button, FormGroup, makeStyles } from '@material-ui/core';
+import { Button, FormGroup, makeStyles, Typography } from '@material-ui/core';
 import InputField from 'customField/InputField/InputField';
 import { FastField, Form, Formik } from 'formik';
+import { useAuth } from 'hooks';
 import React from 'react';
 import { initialValues, validationSchema } from './formikConfig';
 
@@ -25,6 +26,7 @@ const useStyle = makeStyles({
 
 function SignupDialogForm(props) {
     const classes = useStyle();
+    const { authError } = useAuth();
 
     // get props from LoginDialog.jsx
     const { handleSubmitSignupForm } = props;
@@ -41,6 +43,7 @@ function SignupDialogForm(props) {
 
                 return (
                     <Form>
+                        {authError && <Typography className={classes.error}>{authError}</Typography>}
                         <FastField
                             name="firstname"
                             component={InputField}

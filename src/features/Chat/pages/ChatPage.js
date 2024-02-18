@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 
 // icons
 import MiniChatBox from "../components/MiniChatBox";
@@ -26,6 +26,8 @@ const ChatPage = (props) => {
     },
   } = props;
 
+  const scrollRef = useRef();
+
   return openChatBox ? (
     !minisizeChatBox ? (
       <div className={classes.content}>
@@ -42,6 +44,7 @@ const ChatPage = (props) => {
           handleChange={handleChange}
           handleRemoveFile={handleRemoveFile}
           messages={messages}
+          scrollRef={scrollRef}
         />
 
         <BottomChat
@@ -51,6 +54,7 @@ const ChatPage = (props) => {
           setAddMoreButton={setAddMoreButton}
           message={message}
           handleChange={handleChange}
+          scrollRef={scrollRef}
         />
       </div>
     ) : (

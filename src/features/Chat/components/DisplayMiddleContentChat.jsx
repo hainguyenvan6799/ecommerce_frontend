@@ -4,10 +4,11 @@ import ScrollToBottom from "react-scroll-to-bottom";
 
 const DisplayMiddleContentChat = (props) => {
 
-    const { user, addMoreButtons, classes, messages } = props;
+    const { user, addMoreButtons, classes, messages, scrollRef } = props;
 
     return (
         <ScrollToBottom
+            ref={scrollRef}
             className={addMoreButtons ? classes.ROOT_CSS : classes.ROOT_CSS_2}
         >
             {messages.length > 0 &&
