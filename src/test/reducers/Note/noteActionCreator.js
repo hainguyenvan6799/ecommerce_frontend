@@ -1,7 +1,7 @@
-import noteService from "test/services/note";
+import { create, getAll } from "test/services/note";
 
 const fetchNotes = () => async (dispatch) => {
-  noteService.getAll().then((initialNotes) => {
+  getAll().then((initialNotes) => {
     dispatch({
       type: "LOADING_NOTE",
       data: initialNotes,
@@ -10,7 +10,7 @@ const fetchNotes = () => async (dispatch) => {
 };
 
 const createNote = (content) => async (dispatch) => {
-  const returnedNote = await noteService.create(content);
+  const returnedNote = await create(content);
   dispatch({
     type: "NEW_NOTE",
     data: returnedNote,

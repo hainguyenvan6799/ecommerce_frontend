@@ -5,10 +5,8 @@ import NoteFormContainer from "test/NoteForm/noteFormContainer";
 import Notification from "test/Notification";
 import Togglable from "test/Togglable/index";
 import loginService from "../services/login";
+import { setToken } from "test/services/note";
 // services
-import noteService from "../services/note";
-
-
 
 const NoteApp = () => {
     const [showAll, setShowAll] = useState(true);
@@ -32,7 +30,7 @@ const NoteApp = () => {
         if (loggedUserJSON) {
             const user = JSON.parse(loggedUserJSON)
             setUser(user)
-            noteService.setToken(user.token)
+            setToken(user.token)
         }
     }, [])
 
@@ -45,7 +43,7 @@ const NoteApp = () => {
             window.localStorage.setItem(
                 'loggedNoteappUser', JSON.stringify(user)
             )
-            noteService.setToken(user.accessToken)
+            setToken(user.accessToken)
             setUser(user);
             setUsername("");
             setPassword("");

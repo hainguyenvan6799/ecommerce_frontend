@@ -8,4 +8,4 @@ const login = async (credentials) => {
   return response.data;
 };
 
-export { login };
+export default login;
